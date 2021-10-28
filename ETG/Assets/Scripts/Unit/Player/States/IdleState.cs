@@ -5,7 +5,6 @@ using UnityEngine;
 public class IdleState : IState
 {
     Player player;
-
     public IdleState(Unit unit, StateMachine stateMachine) : base(unit, stateMachine)
     {
         this.player = (Player)unit;
@@ -23,6 +22,8 @@ public class IdleState : IState
     public override void Update()
     {
         base.Update();
+
+        player.LookAtPointer();
     }
 
     public override void FixedUpdate()
@@ -30,7 +31,10 @@ public class IdleState : IState
         base.FixedUpdate();
 
         if (player.Move())
+        {
             stateMachine.SetState(player.moveState);
+            return;
+        }
     }
 
     public override void Exit()

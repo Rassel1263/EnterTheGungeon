@@ -24,7 +24,7 @@ public class Unit : MonoBehaviour
     }
     public virtual void FixedUpdate()
     {
-        stateMachine.currentState.FixedUpdate();   
+        stateMachine.currentState.FixedUpdate();
     }
 
     public virtual bool Move()

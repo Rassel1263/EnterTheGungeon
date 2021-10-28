@@ -6,15 +6,17 @@ public class Player : Unit
 {
     // Start is called before the first frame update
 
-    Vector2 MoveDir;
+    public Vector2 MoveDir;
 
     public IdleState idleState;
     public MoveState moveState;
+    public RollState rollState;
 
     public enum PlayerState
     {
         Idle,
         Move,
+        Roll,
     } 
     
     public PlayerState state {get; set;}
@@ -25,6 +27,7 @@ public class Player : Unit
 
         idleState = new IdleState(this, stateMachine);
         moveState = new MoveState(this, stateMachine);
+        rollState = new RollState(this, stateMachine);
 
         stateMachine.Init(idleState);
     }
@@ -34,7 +37,6 @@ public class Player : Unit
     public override void FixedUpdate()
     {
         base.FixedUpdate();
-        LookAtPointer();
     }
     public override void Update()
     {
@@ -56,15 +58,15 @@ public class Player : Unit
         return true;
     }
 
-    void LookAtPointer()
+    public void LookAtPointer()
     {
         Vector2 lookDir = GameManager.Instance.mouse.transform.position - transform.position;
         lookDir.Normalize();
 
-        SetAni(lookDir);
+        SetAniDir(lookDir);
     }
 
-    void SetAni(Vector2 direction)
+    public void SetAniDir(Vector2 direction)
     {
         ani.SetFloat("dirX", direction.x);
         ani.SetFloat("dirY", direction.y);

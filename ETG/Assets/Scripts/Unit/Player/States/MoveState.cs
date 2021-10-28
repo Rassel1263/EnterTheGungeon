@@ -22,6 +22,14 @@ public class MoveState : IState
     public override void Update()
     {
         base.Update();
+
+        player.LookAtPointer();
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            stateMachine.SetState(player.rollState);
+            return;
+        }
     }
 
     public override void FixedUpdate()
@@ -29,7 +37,10 @@ public class MoveState : IState
         base.FixedUpdate();
 
         if (!player.Move())
+        {
             stateMachine.SetState(player.idleState);
+            return;
+        }
     }
     public override void Exit()
     {
