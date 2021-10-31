@@ -8,7 +8,26 @@ public class Unit : MonoBehaviour
     public Rigidbody2D rigid { get; private set; }
     public Animator ani { get; private set; }
 
-    // Start is called before the first frame update
+    public bool hit;
+
+    protected float hitTime;
+    protected float hitTimer;
+
+    protected struct Abilty
+    {
+        public int hp, maxHp;
+        public float speed;
+
+        public void SetAbility(int hp, float speed)
+        {
+            this.hp = hp;
+            maxHp = hp;
+            this.speed = speed;
+        }
+    };
+
+    protected Abilty ability;
+
     public virtual void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -17,10 +36,9 @@ public class Unit : MonoBehaviour
         stateMachine = new StateMachine();
     }
 
-    // Update is called once per frame
     public virtual void Update()
     {
-        stateMachine.currentState.Update();   
+        stateMachine.currentState.Update();
     }
     public virtual void FixedUpdate()
     {
@@ -30,5 +48,19 @@ public class Unit : MonoBehaviour
     public virtual bool Move()
     {
         return false;
+    }
+
+    public void HItManagement()
+    {
+        if(hit)
+        {
+            hitTimer += Time.deltaTime;
+
+            if(hitTimer >= hitTime)
+            {
+                hitTimer = 0.0f;
+                hit = false;
+            }
+        }
     }
 }

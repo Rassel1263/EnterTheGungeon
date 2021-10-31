@@ -16,8 +16,7 @@ public class IdleState : IState
 
         player.state = Player.PlayerState.Idle;
         player.ani.SetInteger("state", (int)player.state);
-
-        Debug.Log(player.state.ToString());
+        player.rigid.velocity = Vector2.zero;
     }
     public override void Update()
     {

@@ -6,20 +6,28 @@ public class Player : Unit
 {
     // Start is called before the first frame update
 
-    public Vector2 MoveDir;
+    public Vector2 moveDir;
+    public Vector2 lookDir;
+
+    public bool checkWall;
 
     public IdleState idleState;
     public MoveState moveState;
     public RollState rollState;
+
+    public GameObject weapon;
+
+    [SerializeField]
+    PlayerUI playerUI;
 
     public enum PlayerState
     {
         Idle,
         Move,
         Roll,
-    } 
-    
-    public PlayerState state {get; set;}
+    }
+
+    public PlayerState state { get; set; }
 
     public override void Start()
     {
@@ -29,7 +37,13 @@ public class Player : Unit
         moveState = new MoveState(this, stateMachine);
         rollState = new RollState(this, stateMachine);
 
+        ability.SetAbility(3, 100);
+
         stateMachine.Init(idleState);
+
+        playerUI.DrawHp(ability.hp, ability.maxHp);
+
+        hitTime = 1.0f;
     }
 
     // Update is called once per frame
@@ -41,6 +55,8 @@ public class Player : Unit
     public override void Update()
     {
         base.Update();
+
+        HItManagement();
     }
 
     public override bool Move()
@@ -48,19 +64,19 @@ public class Player : Unit
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
-        MoveDir = new Vector2(h, v);
+        moveDir = new Vector2(h, v);
+        rigid.velocity = new Vector2(h, v) * ability.speed;
 
-        if (h == 0 && v == 0)
+        if ((h == 0 && v == 0) || checkWall)
             return false;
 
-        transform.Translate(new Vector2(h, v) * Time.deltaTime * 100);
 
         return true;
     }
 
     public void LookAtPointer()
     {
-        Vector2 lookDir = GameManager.Instance.mouse.transform.position - transform.position;
+        lookDir = GameManager.Instance.mouse.transform.position - (transform.position + new Vector3(0, 15, 0));
         lookDir.Normalize();
 
         SetAniDir(lookDir);
@@ -71,4 +87,39 @@ public class Player : Unit
         ani.SetFloat("dirX", direction.x);
         ani.SetFloat("dirY", direction.y);
     }
+    public void Hit(int damage)
+    {
+        if (hit) return;
+        hit = true;
+
+        ability.hp -= damage;
+
+        playerUI.DrawHp(ability.hp, ability.maxHp);
+        playerUI.DrawHit();
+    }
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag == "EnemyBullet")
+        {
+            Hit(collision.gameObject.GetComponentInParent<Bullet>().damage);
+        }
+    }
+
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.tag == "Wall")
+        {
+            checkWall = true;
+        }
+    }
+
+    public void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.collider.tag == "Wall")
+        {
+            checkWall = false;
+        }
+    }
+
 }

@@ -16,8 +16,6 @@ public class MoveState : IState
 
         player.state = Player.PlayerState.Move;
         player.ani.SetInteger("state", (int)player.state);
-
-        Debug.Log(player.state.ToString());
     }
     public override void Update()
     {
