@@ -50,10 +50,13 @@ public class PlayerGun : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && !ani.GetCurrentAnimatorStateInfo(0).IsName("Shoot"))
         {
+
+            GetComponent<AudioSource>().Play();
+
             ani.SetTrigger("shoot");
             GameObject bullet = Instantiate(bulletPrefab, muzzle.transform.position, Quaternion.Euler(gun.eulerAngles));
 
-            Vector2 dir = GameManager.Instance.mouse.transform.position - muzzle.transform.position;
+            Vector2 dir = GameManager.Instance.mouse.mousePos- new Vector2(muzzle.transform.position.x, muzzle.transform.position.y);
             dir.Normalize();
 
             bullet.GetComponent<Bullet>().SetInfo(dir, 200, 5, Bullet.Team.Player);

@@ -34,6 +34,7 @@ public class EnemyGun : MonoBehaviour
         yield return new WaitForSeconds(attackSpeed);
 
         float bulletInterval = angleRange / bulletCnt;
+        GetComponent<AudioSource>().Play();
 
         for (int i = 0; i < bulletCnt; ++i)
         {

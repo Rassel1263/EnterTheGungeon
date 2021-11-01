@@ -22,6 +22,8 @@ public class RollState : IState
         player.SetAniDir(player.moveDir);
         player.weapon.SetActive(false);
 
+        player.rollAudio.Play();
+
         player.rigid.velocity = Vector2.zero;
         force = player.moveDir.normalized * 250;
         player.rigid.AddForce(force, ForceMode2D.Impulse);

@@ -36,7 +36,7 @@ public class DieState : IState
         if (player.ani.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f && !drawFade)
         {
             drawFade = true;
-            player.StartCoroutine(player.playerUI.DrawGameOver());
+            GameManager.Instance.DrawGameOver();
             Debug.Log("Fade");
         }
     }

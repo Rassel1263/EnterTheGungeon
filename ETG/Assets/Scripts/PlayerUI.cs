@@ -13,10 +13,6 @@ public class PlayerUI : MonoBehaviour
 
     [SerializeField] GameObject hitEffect;
 
-    [SerializeField] GameObject gameOver;
-    [SerializeField] Text[] gameOverTxts;
-    [SerializeField] Button[] gameOverButtons;
-
     public void DrawHp(int hp, int maxHp)
     {
         foreach (Transform child in heartContainer.transform)
@@ -59,16 +55,4 @@ public class PlayerUI : MonoBehaviour
         }
     }
   
-    public IEnumerator DrawGameOver()
-    {
-        float alpha = 0.0f;
-        gameOver.SetActive(true);
-        while (alpha < 1.0f)
-        {
-            alpha += Time.unscaledDeltaTime / 1.0f;
-            gameOver.GetComponent<Image>().color = new Color(255, 255, 255, alpha);
-
-            yield return null;
-        }
-    }
 }

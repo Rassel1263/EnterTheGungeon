@@ -77,11 +77,6 @@ public class BulletKin : Enemy
             Instantiate(scoreParticle, transform.position, Quaternion.identity);
         }
 
-        for (int i = 0; i < GameManager.Instance.wave / 5; ++i)
-        {
-            Instantiate(bigScoreParticle, transform.position, Quaternion.identity);
-        }
-
         base.DieExit();
     }
 

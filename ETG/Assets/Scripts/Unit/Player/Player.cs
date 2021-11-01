@@ -23,6 +23,9 @@ public class Player : Unit
     //[SerializeField]
     public PlayerUI playerUI;
 
+    public AudioSource rollAudio;
+    [SerializeField] AudioSource startAudio;
+
     public enum PlayerState
     {
         Idle,
@@ -49,6 +52,8 @@ public class Player : Unit
         playerUI.DrawHp(ability.hp, ability.maxHp);
 
         hitTime = 1.0f;
+
+        startAudio.Play();
     }
 
     // Update is called once per frame
@@ -92,7 +97,7 @@ public class Player : Unit
 
     public void LookAtPointer()
     {
-        lookDir = GameManager.Instance.mouse.transform.position - (transform.position + new Vector3(0, 15, 0));
+        lookDir = GameManager.Instance.mouse.mousePos - new Vector2(transform.position.x, transform.position.y + 15);
         lookDir.Normalize();
 
         SetAniDir(lookDir);

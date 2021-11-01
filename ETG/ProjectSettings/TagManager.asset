@@ -8,6 +8,7 @@ TagManager:
   - PlayerBullet
   - EnemyBullet
   - Enemy
+  - Button
   layers:
   - Default
   - TransparentFX
@@ -50,4 +51,10 @@ TagManager:
     locked: 0
   - name: Wall
     uniqueID: 3576447027
+    locked: 0
+  - name: UI
+    uniqueID: 2503585089
+    locked: 0
+  - name: Mouse
+    uniqueID: 2739984165
     locked: 0
