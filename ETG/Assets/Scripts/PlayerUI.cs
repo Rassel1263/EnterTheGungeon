@@ -13,6 +13,10 @@ public class PlayerUI : MonoBehaviour
 
     [SerializeField] GameObject hitEffect;
 
+    [SerializeField] GameObject gameOver;
+    [SerializeField] Text[] gameOverTxts;
+    [SerializeField] Button[] gameOverButtons;
+
     public void DrawHp(int hp, int maxHp)
     {
         foreach (Transform child in heartContainer.transform)
@@ -24,13 +28,13 @@ public class PlayerUI : MonoBehaviour
 
             if (i + 1 <= hp)
             {
-                heart.transform.parent = heartContainer.transform;
+                heart.transform.SetParent(heartContainer.transform);
                 heart.transform.localScale = new Vector2(1, 1);
                 heart.GetComponent<Image>().sprite = fullHeart;
             }
             else
             {
-                heart.transform.parent = heartContainer.transform;
+                heart.transform.SetParent(heartContainer.transform);
                 heart.transform.localScale = new Vector2(1, 1);
                 heart.GetComponent<Image>().sprite = emptyHeart;
             }
@@ -54,5 +58,17 @@ public class PlayerUI : MonoBehaviour
             hitEffect.GetComponent<RawImage>().color = new Color(255, 255, 255, alpha);
         }
     }
+  
+    public IEnumerator DrawGameOver()
+    {
+        float alpha = 0.0f;
+        gameOver.SetActive(true);
+        while (alpha < 1.0f)
+        {
+            alpha += Time.unscaledDeltaTime / 1.0f;
+            gameOver.GetComponent<Image>().color = new Color(255, 255, 255, alpha);
 
+            yield return null;
+        }
+    }
 }

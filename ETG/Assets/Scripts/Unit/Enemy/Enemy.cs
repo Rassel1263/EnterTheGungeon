@@ -12,6 +12,8 @@ public class Enemy : Unit
     public Collider2D range;
 
     public GameObject dieParticle;
+    public GameObject scoreParticle;
+    public GameObject bigScoreParticle;
 
     public Vector2 dir;
 
@@ -78,6 +80,10 @@ public class Enemy : Unit
    
     public virtual void DieEnter() { }
     public virtual void DieLogic() { }
+    public virtual void DieExit()  
+    {
+        Destroy(gameObject);
+    }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
@@ -92,19 +98,27 @@ public class Enemy : Unit
             hit = true;
         }
 
-        if(collision.tag == "Player")
-        {
-            ability.hp -= 1;
-
-            hit = true;
-            hitVec = collision.transform.position - transform.position;
-        }
+        
     }
 
     void OnTriggerExit2D(Collider2D collision)
     {
         //if (collision.tag == "Player")
         //    detect = false;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.tag == "Player")
+        {
+            ability.hp -= 1;
+
+            if (!hit)
+            {
+                hit = true;
+                hitVec = collision.transform.position - transform.position;
+            }
+        }
     }
 
     void SetDir()

@@ -29,10 +29,12 @@ public class EnemyHit : IState
     {
         base.FixedUpdate();
 
-        if (Mathf.Abs(enemy.rigid.velocity.x) <= 10 && Mathf.Abs(enemy.rigid.velocity.y) <= 10)
-            enemy.rigid.velocity = Vector2.zero;
-        else
-            enemy.rigid.velocity -= force * Time.deltaTime * 2;
+        //if (Mathf.Abs(enemy.rigid.velocity.x) <= 10 && Mathf.Abs(enemy.rigid.velocity.y) <= 10)
+        //    enemy.rigid.velocity = Vector2.zero;
+        //else
+        //    enemy.rigid.velocity -= force * Time.deltaTime * 2;
+
+        enemy.rigid.velocity = Vector2.Lerp(enemy.rigid.velocity, new Vector2(0, 0), Time.deltaTime * 2);
 
         //Debug.Log(new Vector2(Mathf.Abs(enemy.rigid.velocity.x), Mathf.Abs(enemy.rigid.velocity.y)));
     }
@@ -41,7 +43,7 @@ public class EnemyHit : IState
     {
         base.Update();
 
-        if ((Mathf.Abs(enemy.rigid.velocity.x) <= 0 && Mathf.Abs(enemy.rigid.velocity.y) <= 0))
+        if ((Mathf.Abs(enemy.rigid.velocity.x) <= 10 && Mathf.Abs(enemy.rigid.velocity.y) <= 10))
         {
             stateMachine.SetState(enemy.idleState);
             return;

@@ -88,11 +88,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9358de5fa0a7204a833089e0aaa6dd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hit: 0
   range: {fileID: 3945502259861788633}
   dieParticle: {fileID: 5308031480447854590, guid: 0aa75a1c2a4693b4fb0628a8c4cd5f09, type: 3}
+  scoreParticle: {fileID: 7478112188645586393, guid: 5d81e990247bdc14a8746e8177b41046, type: 3}
+  bigScoreParticle: {fileID: 2378558765660596627, guid: 7a48fa9e135992a418967a4227449dd9, type: 3}
   dir: {x: 0, y: 0}
   hitVec: {x: 0, y: 0}
-  hit: 0
   weapon: {fileID: 3945502260866036497}
   hand: {fileID: 3945502260199042207}
 --- !u!1 &3945502259198264002

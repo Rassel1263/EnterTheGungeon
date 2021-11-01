@@ -13,12 +13,14 @@ public class ShotgunKinBlue : Enemy
     [SerializeField]
     GameObject bulletPrefab;
 
+    [SerializeField]
+    GameObject bigBulletPrefab;
 
     public override void Start()
     {
         base.Start();
 
-        ability.SetAbility(30, 50);
+        ability.SetAbility(30, 40);
         detectRange = 120;
 
         StartCoroutine(ShootDelay());
@@ -34,8 +36,8 @@ public class ShotgunKinBlue : Enemy
             Transform target = GameObject.Find("Player").transform;
             float distance = Vector2.Distance(transform.position, target.position);
 
-            if (distance <= 300)
-                weapon.GetComponent<EnemyGun>().ShootReady(dir, 200, 1, 5, 60);
+            if (distance <= 200)
+                weapon.GetComponent<EnemyGun>().ShootReady(dir, 100, 1, 5, 60);
         }
     }
 
@@ -76,8 +78,28 @@ public class ShotgunKinBlue : Enemy
                 bullet.GetComponent<Bullet>().SetInfo(i * 60, 200, 1, Bullet.Team.Enemy);
 
             }
-            Destroy(gameObject);
+
+            DieExit();
         }
+    }
+
+    public override void DieExit()
+    {
+        int rand = Random.Range(3, 6);
+
+        for (int i = 0; i < rand; ++i)
+        {
+            Instantiate(scoreParticle, transform.position, Quaternion.identity);
+        }
+
+        rand = Random.Range(0, 2);
+
+        for (int i = 0; i < rand; ++i)
+        {
+            Instantiate(bigScoreParticle, transform.position, Quaternion.identity);
+        }
+
+        base.DieExit();
     }
 
     void SetHandPos()

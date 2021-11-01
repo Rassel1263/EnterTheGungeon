@@ -25,7 +25,8 @@ public class EnemyGun : MonoBehaviour
     {
         ani.SetTrigger("shoot");
 
-        StartCoroutine(Shoot(dir, speed, damage, bulletCnt, angleRagne));
+        if(gameObject.activeInHierarchy)
+            StartCoroutine(Shoot(dir, speed, damage, bulletCnt, angleRagne));
     }
 
     public IEnumerator Shoot(Vector2 dir, float speed, int damage, int bulletCnt, float angleRange)

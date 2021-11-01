@@ -1,12 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public MouseController mouse;
 
+    public int score;
+
+    public int wave;
+
     private static GameManager instance;
+
+    [SerializeField] Text scoreText;
 
     public static GameManager Instance
     {
@@ -43,6 +50,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        string scoreStr = score.ToString();
+        scoreText.text = scoreStr.PadLeft(6, '0');
     }
 }

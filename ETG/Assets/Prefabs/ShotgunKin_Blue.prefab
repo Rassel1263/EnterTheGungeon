@@ -145,14 +145,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 875821b338e260c42b789ec1693d4445, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hit: 0
   range: {fileID: 0}
   dieParticle: {fileID: 5308031480447854590, guid: 0aa75a1c2a4693b4fb0628a8c4cd5f09, type: 3}
+  scoreParticle: {fileID: 7478112188645586393, guid: 5d81e990247bdc14a8746e8177b41046, type: 3}
+  bigScoreParticle: {fileID: 2378558765660596627, guid: 7a48fa9e135992a418967a4227449dd9, type: 3}
   dir: {x: 0, y: 0}
   hitVec: {x: 0, y: 0}
-  hit: 0
   weapon: {fileID: 7565863083196031744}
   hand: {fileID: 7565863082289754932}
   bulletPrefab: {fileID: 55952975461946725, guid: 7941f57d7e2660b42b3a37dad81c9439, type: 3}
+  bigBulletPrefab: {fileID: 0}
 --- !u!1 &7565863081971315729
 GameObject:
   m_ObjectHideFlags: 0

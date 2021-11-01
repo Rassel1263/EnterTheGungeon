@@ -67,8 +67,26 @@ public class BanBulletKin : Enemy
         {
             GameObject particle = Instantiate(dieParticle);
             particle.transform.position = (transform.position + new Vector3(0, 15, 0));
-            Destroy(gameObject);
+
+            DieExit();
         }
+    }
+
+    public override void DieExit()
+    {
+        int rand = Random.Range(2, 5);
+
+        for (int i = 0; i < rand; ++i)
+        {
+            Instantiate(scoreParticle, transform.position, Quaternion.identity);
+        }
+
+        for (int i = 0; i < GameManager.Instance.wave / 5; ++i)
+        {
+            Instantiate(bigScoreParticle, transform.position, Quaternion.identity);
+        }
+
+        base.DieExit();
     }
 
     void SetHandPos()

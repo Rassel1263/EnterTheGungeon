@@ -14,17 +14,21 @@ public class Player : Unit
     public IdleState idleState;
     public MoveState moveState;
     public RollState rollState;
+    public DieState dieState;
 
     public GameObject weapon;
 
-    [SerializeField]
-    PlayerUI playerUI;
+    public GameObject darkly;
+
+    //[SerializeField]
+    public PlayerUI playerUI;
 
     public enum PlayerState
     {
         Idle,
         Move,
         Roll,
+        Die,
     }
 
     public PlayerState state { get; set; }
@@ -36,6 +40,7 @@ public class Player : Unit
         idleState = new IdleState(this, stateMachine);
         moveState = new MoveState(this, stateMachine);
         rollState = new RollState(this, stateMachine);
+        dieState = new DieState(this, stateMachine);
 
         ability.SetAbility(3, 100);
 
@@ -56,7 +61,18 @@ public class Player : Unit
     {
         base.Update();
 
+        if(ability.hp <= 0)
+        {
+            stateMachine.SetState(dieState);
+            return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+            ability.hp = 0;
+
+
         HItManagement();
+
     }
 
     public override bool Move()
@@ -100,7 +116,7 @@ public class Player : Unit
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == "EnemyBullet")
+        if(collision.tag == "EnemyBullet" && state != Player.PlayerState.Roll)
         {
             Hit(collision.gameObject.GetComponentInParent<Bullet>().damage);
         }
@@ -122,4 +138,16 @@ public class Player : Unit
         }
     }
 
+    public IEnumerator Fade()
+    {
+        float alpha = 0.0f;
+        darkly.SetActive(true);
+        while (alpha < 0.8f)
+        {
+            alpha += Time.unscaledDeltaTime / 1.0f;
+            darkly.GetComponent<SpriteRenderer>().color = new Color(255, 255, 255, alpha);
+
+            yield return null;
+        }
+    }
 }
